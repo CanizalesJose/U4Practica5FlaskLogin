@@ -1,6 +1,11 @@
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, flash, get_flashed_messages
+from flask_mysqldb import MySQL
+from models.ModelUsers import ModelUsers
+from models.entities.users import User
 from config import config
+
 app = Flask(__name__)
+db = MySQL(app)
 
 @app.route("/")
 def index():
@@ -9,13 +14,13 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        _user = request.form["username"]
-        _pass = request.form["password"]
-        print(_user)
-        print(_pass)
-        if _user == "admin" and _pass == "123":
+        user = User(0, request.form['username'], request.form['password'],0)
+        logged_user = ModelUsers.login(db, user)
+
+        if logged_user != None:
             return redirect(url_for("home"))
         else:
+            flash("Acceso rechazado...")
             return render_template("auth/login.html")
     else:
         return render_template("auth/login.html")
