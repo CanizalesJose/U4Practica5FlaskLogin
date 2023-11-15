@@ -1,9 +1,33 @@
 {% extends './base.html' %}
 {% block titulo%}Inicio{% endblock %}
 
+{%block barra%}
+    <!-- Barra de navegación general -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{url_for('home')}}">Práctica 5</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Contenido de la barra de navegación -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{url_for('home')}}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{url_for('admin')}}">Administración</a>
+          </li>
+        </ul>
+        <!-- Botón para cerrar sesión -->
+        <a class="btn btn-danger rounded-pill" href="{{url_for("logout")}}">Cerrar sesión</a>
+
+      </div>
+    </div>
+  </nav>
+{%endblock%}
+
 {%block cuerpo%}
-    <!--Cuerpo del HTML-->
-    <h1 class="text-center">Bienvenido {{current_user.fullname}}, de tipo de usuario {{current_user.usertype}}</h1>
-    <br>
-    <a class="btn btn-dark" href="{{url_for("logout")}}">Cerrar sesión</a>
+    <!-- Cuerpo del HTML -->
+    <h1 class="text-center mt-3">Bienvenido {{current_user.fullname}}, de tipo de usuario {{current_user.usertype}}</h1>
 {%endblock%}

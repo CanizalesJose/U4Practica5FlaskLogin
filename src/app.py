@@ -32,7 +32,10 @@ def login():
         if logged_user != None:
             # Redirigir a la página /home
             login_user(logged_user)
-            return redirect(url_for("home"))
+            if current_user.usertype != 1:
+                return redirect(url_for("home"))
+            else:
+                return redirect(url_for("admin"))
         else:
             # Si el usuario no existe, muestra el mensaje Acceso rechazado y redirige a la página /login
             flash("Acceso rechazado...")
@@ -44,10 +47,7 @@ def login():
 @app.route("/home")
 @login_required
 def home():
-    if current_user.usertype == 1:
-        return render_template("auth/admin.html")
-    else:
-        return render_template("auth/home.html")
+    return render_template("auth/home.html")
 
 # Crear método para cargar el usuario
 @login_manager_app.user_loader
@@ -58,9 +58,10 @@ def load_user(id):
 # Definir ruta de salida de sesión
 @app.route("/logout")
 # Fuerza a que el usuario tenga una sesión activa
-@login_required
+# @login_required
 def logout():
-    logout_user()
+    if current_user.is_authenticated:
+        logout_user()
     return redirect(url_for("login"))
 
 
