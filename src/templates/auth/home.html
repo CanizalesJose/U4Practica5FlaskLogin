@@ -3,5 +3,7 @@
 
 {%block cuerpo%}
     <!--Cuerpo del HTML-->
-    <h1>Bienvenido</h1>
+    <h1 class="text-center">Bienvenido {{current_user.fullname}}, de tipo de usuario {{current_user.usertype}}</h1>
+    <br>
+    <a class="btn btn-dark" href="{{url_for("logout")}}">Cerrar sesión</a>
 {%endblock%}

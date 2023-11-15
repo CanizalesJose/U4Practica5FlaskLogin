@@ -18,3 +18,16 @@ class ModelUsers():
                 return None
         except Exception as ex:
             raise Exception(ex)
+    # Crear método que retorna a partir del id, los datos en una instancia User desde la base de datos
+    @classmethod
+    def get_by_id(self, db, id):
+        try:
+            cursor = db.connection.cursor()
+            cursor.execute("select id, username, usertype, fullname from users where id = %s", (id))
+            row = cursor.fetchone()
+            if row != None:
+                return User(row[0], row[1], None, row[2], row[3])
+            else:
+                return None
+        except Exception as ex:
+            raise Exception(ex)
